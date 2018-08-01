@@ -29,12 +29,13 @@ class Search extends Component {
 
   rightShelf(results) {
     /* filling the filteringBooks array with search result and assigning the right shelf to searched books (big thanks to Maeva FEND Study Jam) */
-    this.setState({ filteredBooks: results })
-    this.state.filteredBooks.map((filteredBook) => {
-              filteredBook.shelf = 'none'
+    /*this.setState({ filteredBooks: results }) */
+    results.map((resultBook) => {
+              resultBook.shelf = 'none'
               this.props.books.map((book) => {
-                  filteredBook.id === book.id ? (filteredBook.shelf=book.shelf) : ('none')}
+                  (resultBook.id === book.id) ? (resultBook.shelf=book.shelf) : ('')}
               )})
+    this.setState({ filteredBooks: results })
   }
 
   newSearch = () => {
