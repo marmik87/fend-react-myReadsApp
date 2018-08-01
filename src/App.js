@@ -21,7 +21,8 @@ class BooksApp extends Component {
     this.loadBooks()
   }
 
-  /* Change shelf functionality for combos */
+  /* Change shelf functionality for combos
+  similar as taught at ContactApp*/
   changeShelf(book, shelf) {
     BooksAPI.update(book, shelf)
     .then( updatedBook => {
