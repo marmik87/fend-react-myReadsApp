@@ -1,50 +1,74 @@
 import React, { Component } from 'react'
+import * as BooksAPI from './BooksAPI'
 import { Route } from 'react-router-dom'
-import ListContacts from './ListContacts'
-import CreateContact from './CreateContact'
-import * as ContactsAPI from './utils/ContactsAPI'
+import { Link } from 'react-router-dom'
+import './App.css'
+import Shelf from './Shelf'
+import Search from './Search'
 
-class App extends Component {
+class BooksApp extends Component {
   state = {
-    screen: 'list',
-    contacts: []
+    books: []
   }
+
+  /* for reusing the BooksApi.getAll in other functions */
+  loadBooks = () =>
+    BooksAPI.getAll().then((books) => {
+      this.setState({ books })
+  })
+
   componentDidMount() {
-    ContactsAPI.getAll().then((contacts) => {
-      this.setState({ contacts })
+    this.loadBooks()
+  }
+
+  /* Change shelf functionality for combos */
+  changeShelf(book, shelf) {
+    BooksAPI.update(book, shelf)
+    .then( updatedBook => {
+      this.setState(state => ({ books: state.books.filter((b) => b.id !== updatedBook.id).concat({ updatedBook })}))
     })
+    this.loadBooks()
   }
-  removeContact = (contact) => {
-    this.setState((state) => ({
-      contacts: state.contacts.filter((c) => c.id !== contact.id)
-    }))
-    ContactsAPI.remove(contact)
-  }
-  createContact(contact) {
-    ContactsAPI.create(contact).then(contact => {
-      this.setState(state => ({
-        contacts: state.contacts.concat({ contact })
-      }))
-    })
-  }
+
 
   render() {
     return (
-      <div>
+      <div className="app">
+        <Route path={"/search"} render={({ history }) => (
+            <Search
+              changeShelf={(book, shelf) => {this.changeShelf(book, shelf)}}
+              books={this.state.books}
+              /> )} />
         <Route exact path={"/"} render={() => (
-          <ListContacts
-            onDeleteContact={this.removeContact}
-            contacts={this.state.contacts}
-          />)}
-        />
-      <Route path={"/create"} render={({ history }) => (
-        <CreateContact
-          onCreateContact={(contact) => {this.createContact(contact)
-          history.push('/')}}/>
-      )}/>
+          <div className="list-books">
+            <div className="list-books-title">
+              <h1>MyReads</h1>
+            </div>
+            <div className="list-books-content">
+              <Shelf
+                books={this.state.books.filter(book => book.shelf === 'currentlyReading')}
+                shelfName="Currently reading"
+                changeShelf={(book, shelf) => {this.changeShelf(book, shelf)}}
+                currentShelf="currentlyReading"/>
+              <Shelf
+                books={this.state.books.filter(book => book.shelf === 'wantToRead')}
+                shelfName="Want To Read"
+                changeShelf={(book, shelf) => {this.changeShelf(book, shelf)}}
+                currentShelf="wantToRead"/>
+              <Shelf
+                books={this.state.books.filter(book => book.shelf === 'read')}
+                shelfName="Read"
+                changeShelf={(book, shelf) => {this.changeShelf(book, shelf)}}
+                currentShelf="read"/>
+            </div>
+            <div className="open-search">
+              <Link to="/search">Add a book</Link>
+            </div>
+          </div>
+        )}/>
       </div>
     )
   }
 }
 
-export default App;
+export default BooksApp
