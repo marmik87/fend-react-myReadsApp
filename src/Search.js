@@ -19,7 +19,7 @@ class Search extends Component {
       BooksAPI.search(query)
       .then(results => {
         if (results.error) {
-          /* catching possibly search error, sources https://reactjs.org/docs/error-boundaries.html, https://dev.to/sarah_chima/error-boundaries-in-react-3eib */
+          /* catching possibly search error, sources https://reactjs.org/docs/error-boundaries.html */
           this.setState({ filteredBooks: [], hasError: true})
         } else {
           this.rightShelf(results)
