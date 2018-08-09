@@ -1,5 +1,5 @@
 # MyReads Project
-This is the project for Udacity's React Fundamentals course in Front-End Developer Nanodegree. It was created by templeate provided by Udacity (where the app was bootstrapped with Create React App). Students were given just plain starting files, css styling, with no functionality.
+This is the project for Udacity's React Fundamentals course in Front-End Developer Nanodegree. It was created by template provided by Udacity (where the app was bootstrapped with Create React App). Students were given just plain starting files, CSS styling, with no functionality.
 
 ## To run this app:
 1. clone/download the files to your computer;
@@ -10,7 +10,7 @@ This is the project for Udacity's React Fundamentals course in Front-End Develop
 Backend server was fully provided by Udacity. See BooksApi.js for more info and see the methods used in the app.
 
 ## Using the app
-In the app user has 3 shelves to manage his/her reads (currently reading, want to read, read). Within the book user is given a combo to change the book's shelf. User can also search in database and add books to his/her shelves. The search is limited, see possible search terms below.
+In the app, user has 3 shelves to manage his/her reads (currently reading, want to read, read). Within the book user is given a combo to change the book's shelf. A user can also search in a database and add books to his/her shelves. The search is limited, see possible search terms below.
 
 ## Search terms
 The whitelisted short collection of available search terms for you to use within app.
